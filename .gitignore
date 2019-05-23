@@ -1,0 +1,5 @@
+*.mp4
+build 
+.settings 
+.classpath 
+.project
