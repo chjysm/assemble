@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +28,9 @@
 		.tabStuff{font-size:13px; color:#555;}
 		.myBanner img{paddingtop:10px; width:90%; height:250px; border-radius:50%;}
 		.footer{background:#b8daff;}
+		.more{text-align:right;}
+       	a[class="more"]{color:black;}
+       	a[class="more"]{color:black; font-weight:bold;}
 	</style>
 	
 </head>
@@ -133,21 +136,68 @@
 			</div>
 	<!-- 	로그인 폼 -->
 			<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 order-lg-2 order-1 text-center pt-3 pb-5">
-               <form>
-                 <div class="form-group pb-1">
-                   <label for="exampleInputEmail1">아이디</label>
-                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="아이디를 입력해주세요">
-                 </div>
-                 <div class="form-group pb-1">
-                   <label for="exampleInputPassword1">비밀번호</label>
-                   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력해주세요">
-                 </div>
-                   <button type="button" class="btn btn-outline-secondary mr-2">로그인</button>
-                   <button type="button" class="btn btn-secondary">가입하기</button>
-                   <br><br>
-                   <a id="kakao-login-btn"></a><a href="http://developers.kakao.com/logout"></a><br>
-                   <a href="login.log"><img height="49" width="222" src="naver.PNG"/></a>
-               </form>
+			<c:choose>
+				<c:when test="${type==1}">
+               		<form>
+                 		<div class="form-group pb-1">
+                   			<label for="comment">안녕하세요! ${nickName}님</label>
+                 		</div>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">마이페이지</button>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">회원탈퇴</button>
+                   		<br><br>
+                   		<a href="logout.na"><img height="49" width="150" src="nlogout.PNG"/></a>
+               		</form>
+            	</c:when>
+            	<c:when test="${type==2}">
+               		<form>
+                 		<div class="form-group pb-1">
+                   			<label for="comment">안녕하세요! ${nickName}님</label>
+                 		</div>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">마이페이지</button>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">회원탈퇴</button>
+                   		<br><br>
+ 						<a href="logout.ka"><img height="49" width="222" src="klogout.PNG"/></a>
+               		</form>
+            	</c:when>
+            	<c:when test="${type==3}">
+               		<form>
+                 		<div class="form-group pb-1">
+                   			<label for="comment">안녕하세요! ${nickName}님</label>
+                 		</div>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">마이페이지</button>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">회원탈퇴</button>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">로그아웃</button>
+                   		<br><br>
+               		</form>
+            	</c:when>
+            	<c:when test="${type==4}">
+               		<form>
+                 		<div class="form-group pb-1">
+                   			<label for="comment">안녕하세요! admin님!</label>
+                 		</div>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">로그아웃</button>
+                   		<br><br>
+               		</form>
+            	</c:when>
+             	<c:otherwise>
+             		<form>
+                 		<div class="form-group pb-1">
+                   			<label for="exampleInputEmail1">아이디</label>
+                   			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="아이디를 입력해주세요">
+                 		</div>
+                 		<div class="form-group pb-1">
+                   			<label for="exampleInputPassword1">비밀번호</label>
+                   			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력해주세요">
+                 		</div>
+                   		<button type="button" class="btn btn-outline-secondary mr-2">로그인</button>
+                   		<button type="button" class="btn btn-secondary">가입하기</button>
+                   		<br><br>
+                   		<br>
+                   		<a id="kakao-login-btn"></a><a href="http://developers.kakao.com/logout"></a>
+                   		<a href="login.na"><img height="49" width="222" src="naver.PNG"/></a>
+               		</form>
+             	</c:otherwise>
+            </c:choose>
 			</div>
 		</div>	
 <!-- 	본문2 -->
@@ -304,6 +354,7 @@
 				    <p>Curabitur dignissim quis nunc vitae laoreet. Etiam ut mattis leo, vel fermentum tellus. Sed sagittis rhoncus venenatis. Quisque commodo consectetur faucibus. Aenean eget ultricies justo.</p>
 				  </div>
 				</div>
+				<div class="more"><a href="list.board" class="more">더 보기 ></a></div>
 			</div>	
 		</div>
 	</div>
@@ -331,7 +382,7 @@
   			container: '#kakao-login-btn',
   			success: function(authObj) {
     			console.log(Kakao.Auth.getAccessToken());
-    			location.href="Klogin.log"; 
+    			location.href="login.ka"; 
   			},
   			fail: function(err) {
      			alert(JSON.stringify(err));

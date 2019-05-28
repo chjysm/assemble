@@ -61,7 +61,7 @@ public class NaverDAO {
 		else
 			return null;
 	}
-	public String getInfo(String accessToken)throws IOException {
+	public String getInfo(String accessToken)throws IOException  {
 		String token = accessToken;
 		String header = "Bearer "+ token;
 		String apiURL;
@@ -83,6 +83,17 @@ public class NaverDAO {
             res.append(inputLine);
         }
         br.close();
-        return parse.parse(res.toString()).getAsJsonObject().get("response").getAsString();
+        return parse.parse(res.toString()).getAsJsonObject().get("response").toString();
+	}
+	public String reprompt() throws UnsupportedEncodingException {
+		String redirectURI = URLEncoder.encode("http://localhost:8080/assembly/callback.log", "UTF-8");
+		SecureRandom random = new SecureRandom();
+		String state = new BigInteger(130, random).toString();
+		String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+		apiURL += "&client_id=" + clientId;
+		apiURL += "&redirect_uri=" + redirectURI;
+		apiURL += "&state=" + state;
+		apiURL += "&auth_type=reprompt";
+		return apiURL;
 	}
 }
