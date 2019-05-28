@@ -10,6 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 <title>Insert title here</title>
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<style>
 		*{margin:0 auto;}
 		.fixedMenu{position:fixed; background:#fff; z-index:999;}
@@ -26,6 +29,7 @@
 		.myBanner img{paddingtop:10px; width:90%; height:250px; border-radius:50%;}
 		.footer{background:#b8daff;}
 	</style>
+	
 </head>
 <body>
 <!-- 고정메뉴 -->
@@ -141,8 +145,8 @@
                    <button type="button" class="btn btn-outline-secondary mr-2">로그인</button>
                    <button type="button" class="btn btn-secondary">가입하기</button>
                    <br><br>
-                   <div>네이버 로그인</div>
-                   <div>카카오 로그인</div>
+                   <a id="kakao-login-btn"></a><a href="http://developers.kakao.com/logout"></a><br>
+                   <a href="login.log"><img height="49" width="222" src="naver.PNG"/></a>
                </form>
 			</div>
 		</div>	
@@ -318,7 +322,21 @@
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- NAVER KAKAO -->
+	<script type='text/javascript'>
+		Kakao.init('49283e307f214dc8c2edee1cae89f2cb');
+		Kakao.Auth.createLoginButton({
+  			container: '#kakao-login-btn',
+  			success: function(authObj) {
+    			console.log(Kakao.Auth.getAccessToken());
+    			location.href="Klogin.log"; 
+  			},
+  			fail: function(err) {
+     			alert(JSON.stringify(err));
+ 			}
+		});
+	</script>
 </body>
 </html>
