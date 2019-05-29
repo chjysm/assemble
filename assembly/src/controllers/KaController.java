@@ -36,30 +36,30 @@ public class KaController extends HttpServlet {
 				String res=ka.getToken(code);
 				String access_token=parse.parse(res.toString()).getAsJsonObject().get("access_token").getAsString();
 				String info=ka.getInfo(access_token);
-				System.out.println(info);
 				try {
 					String nickname=parse.parse(info).getAsJsonObject().get("properties").getAsJsonObject().get("nickname").getAsString();
-					String email="";
-					String age="";
-					String gender="";
+					String email=null;
+					String age=null;
+					String gender=null;
 					if(parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_email").getAsString().equals("true")) {
 						email = parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("email").getAsString();
 					}
 					if(parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_age_range").getAsString().equals("true")) {
-					age = parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("age_range").getAsString();
+						age = parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("age_range").getAsString();
 					}
 					if(parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("has_gender").getAsString().equals("true")) {
 						gender = parse.parse(info).getAsJsonObject().get("kakao_account").getAsJsonObject().get("gender").getAsString();
 					}
 					int type = 2;
+					email+=" "+type;
 					if(me.check(email)==0) {
-						me.insert_member( new MemberDTO(0,email,null,nickname,nickname,null,gender,age,type));
+						me.insert_member(new MemberDTO(0,email,null,nickname,nickname,null,gender,age,type));
 					}
 					int id=me.getId(email);
 					request.getSession().setAttribute("id", id);
 					request.getSession().setAttribute("email", email);
 					request.getSession().setAttribute("type", type);
-					request.getSession().setAttribute("nickName", nickname);
+					request.getSession().setAttribute("nickname", nickname);
 					response.sendRedirect("main.jsp");
 				}catch(Exception e) {
 					e.printStackTrace();
@@ -73,7 +73,7 @@ public class KaController extends HttpServlet {
 				request.getSession().setAttribute("id", null);
 				request.getSession().setAttribute("email", null);
 				request.getSession().setAttribute("type", null);
-				request.getSession().setAttribute("nickName", null);
+				request.getSession().setAttribute("nickname", null);
 				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}
 		}catch (Exception e) {

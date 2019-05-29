@@ -38,7 +38,11 @@ public class MemberDAO {
 		String sql = "insert into members values(member_seq.nextval,?,?,?,?,?,?,?,?)";
 		try (Connection con = this.getConnection(); PreparedStatement pstat = con.prepareStatement(sql);) {
 			pstat.setString(1, dto.getEmail());
-			pstat.setString(2, dto.getPw());
+			if(dto.getPw()==null) {
+				pstat.setString(2, dto.getPw());
+			}else {
+				pstat.setString(2, testSHA256(dto.getPw()));
+			}
 			pstat.setString(3, dto.getName());
 			pstat.setString(4, dto.getNickname());
 			pstat.setString(5, dto.getBirthday());
@@ -65,9 +69,11 @@ public class MemberDAO {
 				PreparedStatement pstat = getPstatForGetId(con,email);
 				ResultSet re = pstat.executeQuery();
 				){
-			re.next();
-			int id=re.getInt("id");
-			return id;
+			if(re.next()) {
+				int id=re.getInt("id");
+				return id;
+			}
+			return -1;
 		} catch(Exception e) {
 			e.printStackTrace();
 			return -1;
@@ -91,5 +97,47 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+	public int loginCheck(String email, String pw) {
+		String sql = "select * from members where email=? and pw=?";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1,email);
+			pstat.setString(2,testSHA256(pw));
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	private PreparedStatement getPstatForGetNickname (Connection con,String email) throws Exception{
+		String sql ="select nickname from members where email = ?";
+		PreparedStatement pstat = con.prepareStatement(sql);
+		pstat.setString(1, email);
+		return pstat;
+	}
+	public String getNickname(String email) {
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = getPstatForGetNickname(con,email);
+				ResultSet re = pstat.executeQuery();
+				){
+			if(re.next()) {
+				String nickname=re.getString(1);
+				return nickname;
+			}
+			return null;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

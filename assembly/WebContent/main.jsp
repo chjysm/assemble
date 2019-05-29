@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 	<style>
 		*{margin:0 auto;}
 		.fixedMenu{position:fixed; background:#fff; z-index:999;}
@@ -32,7 +33,16 @@
        	a[class="more"]{color:black;}
        	a[class="more"]{color:black; font-weight:bold;}
 	</style>
-	
+	<script>
+		$(function(){
+			$("#emailLogout").on("click",function(){
+				location.href="logout.me";
+			});
+			$("#getPw").on("click",function(){
+				location.href="getPw.me";
+			});
+		});
+	</script>
 </head>
 <body>
 <!-- 고정메뉴 -->
@@ -135,12 +145,12 @@
 				</div>
 			</div>
 	<!-- 	로그인 폼 -->
-			<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 order-lg-2 order-1 text-center pt-3 pb-5">
+			<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 order-lg-2 order-1 text-center pt-3 pb-5 login">
 			<c:choose>
 				<c:when test="${type==1}">
                		<form>
                  		<div class="form-group pb-1">
-                   			<label for="comment">안녕하세요! ${nickName}님</label>
+                   			<label for="comment">안녕하세요! ${nickname}님</label>
                  		</div>
                    		<button type="button" class="btn btn-outline-secondary mr-2">마이페이지</button>
                    		<button type="button" class="btn btn-outline-secondary mr-2">회원탈퇴</button>
@@ -151,7 +161,7 @@
             	<c:when test="${type==2}">
                		<form>
                  		<div class="form-group pb-1">
-                   			<label for="comment">안녕하세요! ${nickName}님</label>
+                   			<label for="comment">안녕하세요! ${nickname}님</label>
                  		</div>
                    		<button type="button" class="btn btn-outline-secondary mr-2">마이페이지</button>
                    		<button type="button" class="btn btn-outline-secondary mr-2">회원탈퇴</button>
@@ -162,11 +172,11 @@
             	<c:when test="${type==3}">
                		<form>
                  		<div class="form-group pb-1">
-                   			<label for="comment">안녕하세요! ${nickName}님</label>
+                   			<label for="comment">안녕하세요! ${nickname}님</label>
                  		</div>
                    		<button type="button" class="btn btn-outline-secondary mr-2">마이페이지</button>
                    		<button type="button" class="btn btn-outline-secondary mr-2">회원탈퇴</button>
-                   		<button type="button" class="btn btn-outline-secondary mr-2">로그아웃</button>
+                   		<button type="button" class="btn btn-outline-secondary mr-2" id="emailLogout">로그아웃</button>
                    		<br><br>
                		</form>
             	</c:when>
@@ -180,18 +190,19 @@
                		</form>
             	</c:when>
              	<c:otherwise>
-             		<form>
+             		<form action="login.me" method="POST">
                  		<div class="form-group pb-1">
                    			<label for="exampleInputEmail1">아이디</label>
-                   			<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="아이디를 입력해주세요">
+                   			<input type="email" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="아이디를 입력해주세요">
                  		</div>
                  		<div class="form-group pb-1">
                    			<label for="exampleInputPassword1">비밀번호</label>
-                   			<input type="password" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력해주세요">
+                   			<input type="password" name="pw" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력해주세요">
                  		</div>
-                   		<button type="button" class="btn btn-outline-secondary mr-2">로그인</button>
+                   		<button type="submit" class="btn btn-outline-secondary mr-2">로그인</button>
                    		<button type="button" class="btn btn-secondary">가입하기</button>
-                   		<br><br>
+                   		<button type="button" class="btn btn-secondary" id="getPw">비밀번호 찾기</button>
+                   		<br>
                    		<br>
                    		<a id="kakao-login-btn"></a><a href="http://developers.kakao.com/logout"></a>
                    		<a href="login.na"><img height="49" width="222" src="naver.PNG"/></a>
@@ -372,7 +383,7 @@
 	</div>	
 	<!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<!-- NAVER KAKAO -->
@@ -381,7 +392,6 @@
 		Kakao.Auth.createLoginButton({
   			container: '#kakao-login-btn',
   			success: function(authObj) {
-    			console.log(Kakao.Auth.getAccessToken());
     			location.href="login.ka"; 
   			},
   			fail: function(err) {

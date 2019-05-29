@@ -10,22 +10,20 @@
 <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
 <script>
 	$(function(){
-		$("#btn").on("click",function(){
-			if(${type==1}){
-			location.href="reprompt.na";
-			}else if(${type==2}){
+		$("#nabtn").on("click",function(){
+				location.href="reprompt.na";
+		});
+		$("#kabtn").on("click",function(){
 				location.href="reprompt.ka";
-			}
 		});
 	});
 </script>
-<style>
-	
-</style>
 </head>
 <body>
 <h1>필수 입력 정보 수집을 모두 동의 해 주세요</h1>
-
-<input type="button" value="동의하러가기" id= 'btn'>
+<c:choose>
+<c:when test="${type==1}"><input type="button" value="동의하러가기" id= 'nabtn'></c:when>
+<c:when test="${type==2}"><input type="button" value="동의하러가기" id= 'kabtn'></c:when>
+</c:choose>
 </body> 
 </html>
