@@ -19,13 +19,14 @@ public class MailDAO {
 			String result = getDigit()+getDigit()+getDigit()+getDigit()+getDigit()+getDigit()+getDigit()+getDigit();
 			return result;
 	}
-	public void Mail(String to){
+	public String Mail(String to){
 		String host     = "smtp.naver.com";
 		final String user   = "chjysm2";
 		final String password  = "asdf1020!!";
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.auth", "true");
+		String certi=this.ranAcc();
 		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(user, password);
@@ -37,10 +38,12 @@ public class MailDAO {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject("Assembly 인증번호");
 			// Text
-			message.setText("인증번호 : "+this.ranAcc());
+			message.setText("인증번호 : "+certi);
 			Transport.send(message);
+			return certi;
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 }

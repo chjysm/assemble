@@ -140,4 +140,24 @@ public class MemberDAO {
 			return null;
 		}
 	}
+	public int pwReset(String email, String pw) {
+		String sql = "update members set pw=? where email=? ";
+		try(
+				Connection con = this.getConnection();
+				PreparedStatement pstat = con.prepareStatement(sql);
+				){
+			pstat.setString(1,testSHA256(pw));
+			pstat.setString(2,email);
+			int result = pstat.executeUpdate();
+			con.commit();
+			return result;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

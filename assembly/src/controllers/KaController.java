@@ -23,6 +23,8 @@ public class KaController extends HttpServlet {
 		String reqUri = request.getRequestURI();
 		String ctxPath = request.getContextPath();
 		String cmd = reqUri.substring(ctxPath.length());
+		response.setCharacterEncoding("UTF8");
+		response.setContentType("text/html;charset=UTF-8");
 		KakaoDAO ka = new KakaoDAO();
 		MemberDAO me = new MemberDAO();
 		Gson g = new Gson();

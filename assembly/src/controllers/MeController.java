@@ -43,9 +43,17 @@ public class MeController extends HttpServlet {
 				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}else if(cmd.equals("/getPw.me")) {
 				request.getRequestDispatcher("getPw.jsp").forward(request, response);
+			}else if(cmd.equals("/goPwReset.me")) {
+				String email=request.getParameter("email");
+				request.setAttribute("email", email);
+				request.getRequestDispatcher("pwReset.jsp").forward(request, response);
+			}else if(cmd.equals("/pwReset.me")) {
+				String email=request.getParameter("email");
+				String pw=request.getParameter("pw");
+				System.out.println(email +" "+pw);
+				int result=me.pwReset(email, pw);
+				response.getWriter().print(result);
 			}
-			
-			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

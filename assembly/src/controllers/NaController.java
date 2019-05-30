@@ -27,6 +27,8 @@ public class NaController extends HttpServlet {
 		MemberDAO me = new MemberDAO();
 		Gson g = new Gson();
 		JsonParser parse = new JsonParser();
+		response.setCharacterEncoding("UTF8");
+		response.setContentType("text/html;charset=UTF-8");
 		try {
 			if(cmd.equals("/login.na")) {
 				String apiURL=na.login();

@@ -39,7 +39,8 @@
 				location.href="logout.me";
 			});
 			$("#getPw").on("click",function(){
-				location.href="getPw.me";
+// 				location.href="getPw.me";
+				open("getPw.me","_brank","width=600px,height=400px")
 			});
 		});
 	</script>
@@ -365,7 +366,7 @@
 				    <p>Curabitur dignissim quis nunc vitae laoreet. Etiam ut mattis leo, vel fermentum tellus. Sed sagittis rhoncus venenatis. Quisque commodo consectetur faucibus. Aenean eget ultricies justo.</p>
 				  </div>
 				</div>
-				<div class="more"><a href="list.board" class="more">더 보기 ></a></div>
+				<div class="more"><a href="list.board01" class="more">더 보기 ></a></div>
 			</div>	
 		</div>
 	</div>
